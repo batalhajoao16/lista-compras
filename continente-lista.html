@@ -500,12 +500,13 @@ function renderList() {
 
   if (!list.length) {
     body.innerHTML = '';
-    body.appendChild(empty);
     empty.style.display = 'block';
+    body.appendChild(empty);
     return;
   }
-  empty.style.display = 'none';
 
+  // Remove empty from body before clearing, so we don't lose the reference
+  if (empty.parentNode === body) body.removeChild(empty);
   // Group by aisle
   const groups = {};
   list.forEach(item => {
@@ -519,8 +520,6 @@ function renderList() {
     if (b === 'sem-corredor') return -1;
     return parseInt(a) - parseInt(b);
   });
-
-  body.innerHTML = '';
   keys.forEach((key, gi) => {
     const items    = groups[key];
     const isUnk    = key === 'sem-corredor';
