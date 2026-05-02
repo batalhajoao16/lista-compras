@@ -107,7 +107,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .btn-clear-done:hover{border-color:var(--red);color:var(--red);}
 
 /* empty */
-.list-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.list-empty{text-align:center;padding:60px 20px;color:var(--muted);flex-shrink:0;}
 .list-empty .ei{font-size:50px;margin-bottom:14px;}
 .list-empty p{font-size:14px;line-height:1.9;}
 
@@ -167,11 +167,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
       <button class="btn-confirm" id="btn-confirm">Adicionar à lista</button>
     </div>
 
-    <div class="list-body" id="list-body">
-      <div class="list-empty" id="list-empty">
-        <div class="ei">🛍️</div>
-        <p>Pesquisa um produto acima<br>para o adicionar à lista.</p>
-      </div>
+    <div class="list-body" id="list-body"></div>
+    <div class="list-empty" id="list-empty">
+      <div class="ei">🛍️</div>
+      <p>Pesquisa um produto acima<br>para o adicionar à lista.</p>
     </div>
 
     <div class="bottom-bar" id="bottom-bar">
@@ -414,15 +413,9 @@ function renderList() {
   // Bottom bar
   document.getElementById('bottom-bar').classList.toggle('visible', done > 0);
 
-  if (!total) {
-    body.innerHTML = '';
-    empty.style.display = 'block';
-    body.appendChild(empty);
-    return;
-  }
-  if (empty.parentNode === body) body.removeChild(empty);
-  empty.style.display = 'none';
+  empty.style.display = total ? 'none' : 'block';
   body.innerHTML = '';
+  if (!total) return;
 
   // Group by aisle
   const groups = {};
