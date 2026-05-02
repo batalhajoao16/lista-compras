@@ -423,15 +423,15 @@ document.getElementById('new-aisle').addEventListener('keydown', e => {
 function addToList(name, aisle) {
   const existing = list.find(i => norm(i.name) === norm(name));
   if (existing) {
-    existing.done = false; // uncheck if re-adding
+    existing.done = false;
     toast(`📦 ${name} já está na lista`);
   } else {
     list.push({ id: nid++, name, aisle, done: false });
     toast(`✅ ${name} adicionado`);
   }
   persist();
-  pushList();
-  renderList();
+  renderList();            // atualiza ecrã imediatamente
+  setTimeout(pushList, 0); // sincroniza Sheets em background
 }
 
 function toggleItem(id) {
@@ -439,7 +439,7 @@ function toggleItem(id) {
   if (!item) return;
   item.done = !item.done;
   persist();
-  pushList();
+  setTimeout(pushList, 0);
 
   // Update DOM directly — no full re-render
   const liEl    = document.querySelector(`.li[data-id="${id}"]`);
@@ -471,7 +471,9 @@ function toggleItem(id) {
 
 function deleteItem(id) {
   list = list.filter(i => i.id !== id);
-  persist(); pushList(); renderList();
+  persist();
+  renderList();
+  setTimeout(pushList, 0);
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────
