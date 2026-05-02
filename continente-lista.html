@@ -440,8 +440,32 @@ function toggleItem(id) {
   item.done = !item.done;
   persist();
   pushList();
-  renderList();
+
+  // Update DOM directly — no full re-render
+  const liEl    = document.querySelector(`.li[data-id="${id}"]`);
+  const chkEl   = document.querySelector(`.li-chk[data-id="${id}"] .chk-circle`);
+  if (liEl)  liEl.classList.toggle('done', item.done);
+  if (chkEl) chkEl.classList.toggle('on',  item.done);
+
+  // Update progress bar
   const total = list.length, done = list.filter(i=>i.done).length;
+  const pct = Math.round(done/total*100);
+  const pw = document.getElementById('progress-wrap');
+  pw.classList.toggle('visible', total > 0);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-txt').textContent  = `${done} de ${total} produto${total!==1?'s':''}`;
+  document.getElementById('progress-pct').textContent  = pct + '%';
+
+  // Update aisle counter
+  const aisleKey = item.aisle != null ? item.aisle : 'sem-corredor';
+  const aisleItems = list.filter(i => (i.aisle != null ? i.aisle : 'sem-corredor') == aisleKey);
+  const aisleDone  = aisleItems.filter(i => i.done).length;
+  const countEl = liEl?.closest('.aisle-grp')?.querySelector('.aisle-count');
+  if (countEl) countEl.innerHTML = `<b>${aisleDone}</b>/${aisleItems.length}`;
+
+  // Show/hide bottom bar
+  document.getElementById('bottom-bar').classList.toggle('visible', done > 0);
+
   if (done === total && total > 0) setTimeout(()=>toast('🎉 Compras concluídas!'), 300);
 }
 
@@ -515,6 +539,7 @@ function renderList() {
     items.forEach(item => {
       const li = document.createElement('div');
       li.className = 'li' + (item.done ? ' done' : '');
+      li.dataset.id = item.id;
       li.innerHTML = `
         <div class="li-chk" data-id="${item.id}">
           <div class="chk-circle${item.done?' on':''}"></div>
