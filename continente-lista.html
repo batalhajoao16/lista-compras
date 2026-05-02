@@ -32,16 +32,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 /* ══ LISTA ══ */
 .list-wrap{display:flex;flex-direction:column;height:100%;}
 
+/* Status bar */
+.status-bar{background:var(--yellow-bg);border-bottom:1px solid #fcd34d;padding:8px 14px;font-size:12px;color:var(--yellow);font-weight:600;display:none;align-items:center;gap:6px;flex-shrink:0;}
+.status-bar.visible{display:flex;}
+.status-dot-anim{width:8px;height:8px;border-radius:50%;background:var(--yellow);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Progress */
+.progress-wrap{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;display:none;}
+.progress-wrap.visible{display:block;}
+.progress-bar{height:5px;background:var(--surface2);border-radius:10px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--green);border-radius:10px;transition:width .4s ease;}
+.progress-txt{font-size:12px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;}
+.progress-txt b{color:var(--text);}
+
 /* Search bar */
 .search-bar{padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;position:relative;z-index:20;}
 .search-row{display:flex;gap:8px;}
 .search-inp{flex:1;border:2px solid var(--border);border-radius:var(--rs);padding:12px 13px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s;}
 .search-inp:focus{border-color:var(--red);}
 .search-inp::placeholder{color:var(--muted);}
-.btn-sync{width:46px;height:46px;border:none;background:var(--surface2);border-radius:var(--rs);cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
-.btn-sync:hover{background:var(--border);}
-.btn-sync.spin{animation:spinning 1s linear infinite;}
-@keyframes spinning{to{transform:rotate(360deg);}}
 
 /* Suggestions */
 .suggestions{position:absolute;left:14px;right:14px;top:calc(100% - 2px);background:var(--surface);border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);box-shadow:var(--shadow-lg);z-index:50;max-height:260px;overflow-y:auto;display:none;}
@@ -49,19 +59,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .sug-item{padding:13px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;user-select:none;}
 .sug-item:last-child{border-bottom:none;}
 .sug-item:active{background:var(--bg);}
-.sug-aisle{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:white;background:var(--red);border-radius:6px;padding:3px 8px;flex-shrink:0;letter-spacing:.02em;}
-.sug-aisle.new{background:var(--yellow);color:white;}
+.sug-aisle{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:white;background:var(--red);border-radius:6px;padding:3px 8px;flex-shrink:0;}
+.sug-aisle.new{background:var(--yellow);}
 .sug-name{font-size:15px;flex:1;}
 .sug-name b{color:var(--red);}
 .sug-hint{font-size:12px;color:var(--muted);}
 
 /* New product panel */
-.new-panel{background:var(--yellow-bg);border-bottom:1px solid #fde68a;padding:12px 14px;display:none;flex-direction:column;gap:8px;flex-shrink:0;}
+.new-panel{background:var(--yellow-bg);border-bottom:1px solid #fcd34d;padding:12px 14px;display:none;flex-direction:column;gap:8px;flex-shrink:0;}
 .new-panel.open{display:flex;}
 .new-panel-title{font-size:13px;font-weight:600;color:var(--yellow);}
 .new-panel-row{display:flex;gap:8px;align-items:center;}
 .new-panel-row label{font-size:13px;color:var(--text);width:130px;flex-shrink:0;}
-.new-inp{flex:1;border:1.5px solid #fcd34d;border-radius:7px;padding:9px 11px;font-family:'DM Sans',sans-serif;font-size:15px;background:white;outline:none;color:var(--text);}
+.new-inp{border:1.5px solid #fcd34d;border-radius:7px;padding:9px 11px;font-family:'DM Sans',sans-serif;font-size:15px;background:white;outline:none;color:var(--text);width:80px;}
 .new-inp:focus{border-color:var(--yellow);}
 .btn-confirm{background:var(--text);color:white;border:none;border-radius:var(--rs);padding:11px 14px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer;width:100%;margin-top:2px;}
 .btn-confirm:hover{background:#2d2820;}
@@ -77,32 +87,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .aisle-lbl{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
 .aisle-count{margin-left:auto;font-size:12px;color:var(--muted);}
 .aisle-count b{color:var(--text);}
-
-/* List items */
-.li{background:var(--surface);border-radius:var(--r);padding:0;display:flex;align-items:center;margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s;}
-.li-chk{width:60px;min-height:54px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s;-webkit-tap-highlight-color:transparent;}
-.li-chk:active{background:var(--bg);}
-.chk-circle{width:26px;height:26px;border:2.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;background:white;}
-.chk-circle.on{background:var(--green);border-color:var(--green);}
-.chk-circle.on::after{content:'✓';color:white;font-size:14px;font-weight:700;}
-.li-name{flex:1;font-size:16px;font-weight:500;padding:16px 0;transition:all .2s;}
-.li.done .li-name{text-decoration:line-through;color:var(--muted);}
-.li.done{box-shadow:none;background:var(--surface2);}
-.li.done .chk-circle{background:var(--green);border-color:var(--green);}
-.li.done .chk-circle::after{content:'✓';color:white;font-size:14px;font-weight:700;}
-.li-del{width:46px;min-height:54px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;flex-shrink:0;transition:color .15s;}
-.li-del:active{color:var(--red);}
-
-/* unknown aisle */
 .aisle-grp.unknown .aisle-num{color:var(--yellow);}
 
-/* progress bar */
-.progress-wrap{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;display:none;}
-.progress-wrap.visible{display:block;}
-.progress-bar{height:5px;background:var(--surface2);border-radius:10px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--green);border-radius:10px;transition:width .4s ease;}
-.progress-txt{font-size:12px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;}
-.progress-txt b{color:var(--text);}
+/* List items */
+.li{background:var(--surface);border-radius:var(--r);display:flex;align-items:center;margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;transition:all .2s;}
+.li.done{box-shadow:none;background:var(--surface2);}
+.li-chk{width:60px;min-height:54px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.chk-circle{width:26px;height:26px;border:2.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;background:white;font-size:14px;color:white;font-weight:700;}
+.chk-circle.on{background:var(--green);border-color:var(--green);}
+.li-name{flex:1;font-size:16px;font-weight:500;padding:16px 0;transition:all .2s;}
+.li.done .li-name{text-decoration:line-through;color:var(--muted);}
+.li-del{width:46px;min-height:54px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;flex-shrink:0;}
+.li-del:active{color:var(--red);}
 
 /* bottom action bar */
 .bottom-bar{background:var(--surface);border-top:1px solid var(--border);padding:10px 14px 14px;flex-shrink:0;display:none;}
@@ -120,20 +116,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 .cfg-card{background:var(--surface);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);}
 .cfg-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:4px;}
 .cfg-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
-.field-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px;}
-.field-inp{width:100%;border:2px solid var(--border);border-radius:var(--rs);padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s;margin-bottom:12px;}
-.field-inp:focus{border-color:var(--red);}
-.field-inp::placeholder{color:var(--muted);}
-.btn-red{width:100%;background:var(--red);color:white;border:none;border-radius:var(--rs);padding:13px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
-.btn-red:hover{background:var(--red-dark);}
-.btn-ghost{width:100%;background:none;border:1.5px solid var(--border);border-radius:var(--rs);padding:11px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);cursor:pointer;transition:all .2s;margin-top:8px;}
+.btn-ghost{width:100%;background:none;border:1.5px solid var(--border);border-radius:var(--rs);padding:11px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);cursor:pointer;transition:all .2s;}
 .btn-ghost:hover{border-color:var(--text);color:var(--text);}
-.status-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-top:10px;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.dot-ok{background:var(--green);}
-.dot-err{background:var(--red);}
-.dot-wait{background:var(--yellow);}
-.schema-box{background:var(--bg);border-radius:var(--rs);padding:12px 14px;font-size:13px;line-height:2;font-family:monospace;color:var(--text);}
+.conn-status{display:flex;align-items:center;gap:8px;font-size:13px;padding:10px 14px;border-radius:var(--rs);margin-bottom:14px;}
+.conn-status.ok{background:var(--green-soft);color:var(--green);}
+.conn-status.err{background:var(--red-soft);color:var(--red);}
+.conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.conn-dot.ok{background:var(--green);}
+.conn-dot.err{background:var(--red);}
 
 /* TOAST */
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:white;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3);pointer-events:none;}
@@ -151,40 +141,39 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 <div class="view active" id="view-lista">
   <div class="list-wrap">
 
-    <!-- Progress -->
+    <div class="status-bar" id="status-bar">
+      <div class="status-dot-anim"></div>
+      <span id="status-bar-txt">A sincronizar…</span>
+    </div>
+
     <div class="progress-wrap" id="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
       <div class="progress-txt"><span id="progress-txt">0 de 0 produtos</span><b id="progress-pct">0%</b></div>
     </div>
 
-    <!-- Search -->
     <div class="search-bar">
       <div class="search-row">
         <input class="search-inp" id="search-inp" type="text" placeholder="Adicionar produto…" autocomplete="off" autocorrect="off"/>
-        <button class="btn-sync" id="btn-sync" title="Sincronizar com Sheets">🔄</button>
       </div>
       <div class="suggestions" id="suggestions"></div>
     </div>
 
-    <!-- New product panel -->
     <div class="new-panel" id="new-panel">
       <div class="new-panel-title">⚠️ Produto novo — em que corredor fica?</div>
       <div class="new-panel-row">
         <label>Corredor nº</label>
-        <input class="new-inp" id="new-aisle" type="number" min="1" placeholder="ex: 3" style="width:80px;flex:none;"/>
+        <input class="new-inp" id="new-aisle" type="number" min="1" placeholder="ex: 3"/>
       </div>
       <button class="btn-confirm" id="btn-confirm">Adicionar à lista</button>
     </div>
 
-    <!-- List -->
     <div class="list-body" id="list-body">
       <div class="list-empty" id="list-empty">
         <div class="ei">🛍️</div>
-        <p>Pesquisa um produto acima<br>para o adicionar à lista.<br><br>Experimenta escrever <b>"leite"</b>.</p>
+        <p>Pesquisa um produto acima<br>para o adicionar à lista.</p>
       </div>
     </div>
 
-    <!-- Bottom action -->
     <div class="bottom-bar" id="bottom-bar">
       <button class="btn-clear-done" id="btn-clear-done">🗑 Remover produtos já comprados</button>
     </div>
@@ -197,31 +186,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
   <div class="cfg-wrap">
 
     <div class="cfg-card">
-      <div class="cfg-title">🔗 Google Sheets</div>
-      <div class="cfg-sub">Liga a app à tua folha para sincronizar a lista e a base de dados de produtos entre os dois telemóveis.</div>
-      <div class="field-lbl">ID da Folha</div>
-      <input class="field-inp" id="cfg-sheet-id" type="text" placeholder="Cole aqui o ID da folha…"/>
-      <div class="field-lbl">Chave API Google</div>
-      <input class="field-inp" id="cfg-api-key" type="password" placeholder="AIzaSy…"/>
-      <button class="btn-red" id="btn-save-cfg">💾 Guardar e Testar</button>
-      <div class="status-row" id="status-row" style="display:none">
-        <div class="dot" id="status-dot"></div>
-        <span id="status-txt"></span>
+      <div class="cfg-title">🔥 Estado da ligação Firebase</div>
+      <div id="conn-status" class="conn-status ok">
+        <div class="conn-dot ok"></div>
+        <span id="conn-txt">Ligado e a sincronizar em tempo real</span>
       </div>
-    </div>
-
-    <div class="cfg-card">
-      <div class="cfg-title">📋 Estrutura do Google Sheets</div>
-      <div class="cfg-sub">Cria uma folha com <b>duas abas</b> com estes nomes exatos:</div>
-      <div class="schema-box">
-        <b>Aba "Produtos"</b><br>
-        Coluna A → Nome do produto<br>
-        Coluna B → Número do corredor<br>
-        <br>
-        <b>Aba "Lista"</b><br>
-        Coluna A → Nome do produto<br>
-        Coluna B → Comprado (TRUE/FALSE)
-      </div>
+      <div class="cfg-sub" style="margin-bottom:0">A lista e os produtos sincronizam automaticamente entre os dois telemóveis. Partilha o link da app com a outra pessoa:<br><br><b>https://batalhajoao16.github.io/lista-compras/continente-lista.html</b></div>
     </div>
 
     <div class="cfg-card">
@@ -232,8 +202,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 
     <div class="cfg-card" style="background:var(--surface2);">
       <div class="cfg-title">🧪 Dados de exemplo</div>
-      <div class="cfg-sub">Carrega produtos de demonstração para experimentar a app sem precisar do Google Sheets.</div>
-      <button class="btn-ghost" id="btn-demo">Carregar dados de exemplo</button>
+      <div class="cfg-sub">Carrega produtos de demonstração para começar a usar a app mais rapidamente.</div>
+      <button class="btn-ghost" id="btn-demo">Carregar produtos de exemplo</button>
     </div>
 
   </div>
@@ -241,88 +211,62 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);dis
 
 <div class="toast" id="toast"></div>
 
-<script>
-// ── STATE ──────────────────────────────────────────────────────────────────
-let cfg      = JSON.parse(localStorage.getItem('cfg')      || '{}');
-let products = JSON.parse(localStorage.getItem('products') || '[]'); // {name, aisle}
-let list     = JSON.parse(localStorage.getItem('list')     || '[]'); // {id, name, aisle, done}
-let nid      = parseInt(localStorage.getItem('nid')        || '1');
-let pending  = null; // {name} waiting for aisle input
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, writeBatch, getDocs, query, orderBy, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-function persist() {
-  localStorage.setItem('products', JSON.stringify(products));
-  localStorage.setItem('list',     JSON.stringify(list));
-  localStorage.setItem('nid',      nid);
-}
+// ── FIREBASE CONFIG ───────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyDsdGe0QcLAbRKKDgoM0vn5Y2k_t9re1hQ",
+  authDomain: "lista-compras-35ae1.firebaseapp.com",
+  projectId: "lista-compras-35ae1",
+  storageBucket: "lista-compras-35ae1.firebasestorage.app",
+  messagingSenderId: "445895865879",
+  appId: "1:445895865879:web:e0cccce3e9167397fc4e52"
+};
 
-// ── TABS ──────────────────────────────────────────────────────────────────
-document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
-  t.classList.add('active');
-  document.getElementById('view-' + t.dataset.tab).classList.add('active');
-}));
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
-// ── SHEETS API ────────────────────────────────────────────────────────────
-const BASE = 'https://sheets.googleapis.com/v4/spreadsheets';
+// ── COLLECTIONS ───────────────────────────────────────────────────────────
+const productsCol = collection(db, 'produtos');
+const listCol     = collection(db, 'lista');
 
-async function sGet(range) {
-  const r = await fetch(`${BASE}/${cfg.sheetId}/values/${encodeURIComponent(range)}?key=${cfg.apiKey}`);
-  if (!r.ok) throw new Error(await r.text());
-  return (await r.json()).values || [];
-}
-async function sAppend(range, values) {
-  const r = await fetch(`${BASE}/${cfg.sheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=RAW&key=${cfg.apiKey}`, {
-    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({values})
-  });
-  if (!r.ok) throw new Error(await r.text());
-}
-async function sClear(range) {
-  await fetch(`${BASE}/${cfg.sheetId}/values/${encodeURIComponent(range)}:clear?key=${cfg.apiKey}`, {method:'POST'});
-}
+// ── STATE ─────────────────────────────────────────────────────────────────
+let products = []; // {id, name, aisle}
+let listItems = []; // {id, name, aisle, done}
+let pending = null;
 
-async function syncFromSheets() {
-  if (!cfg.sheetId || !cfg.apiKey) { toast('⚙️ Configura o Google Sheets primeiro'); return; }
-  const btn = document.getElementById('btn-sync');
-  btn.classList.add('spin');
-  try {
-    const pRows = await sGet('Produtos!A2:B');
-    products = pRows.map(r => ({name:(r[0]||'').trim(), aisle:parseInt(r[1])||0})).filter(p=>p.name);
-
-    const lRows = await sGet('Lista!A2:B');
-    list = lRows.map((r,i) => ({
-      id: i+1, name:(r[0]||'').trim(),
-      aisle: getAisle((r[0]||'').trim()),
-      done: r[1]==='TRUE'
-    })).filter(i=>i.name);
-    nid = list.length + 1;
-
-    persist();
-    renderList();
-    toast('✅ Sincronizado!');
-  } catch(e) {
-    toast('❌ Erro ao sincronizar');
-    console.error(e);
-  }
-  btn.classList.remove('spin');
-}
-
-async function pushList() {
-  if (!cfg.sheetId || !cfg.apiKey) return;
-  try {
-    await sClear('Lista!A2:B');
-    if (list.length) await sAppend('Lista!A2', list.map(i=>[i.name, i.done?'TRUE':'FALSE']));
-  } catch(e) { console.warn(e); }
-}
-
-async function pushNewProduct(name, aisle) {
-  if (!cfg.sheetId || !cfg.apiKey) return;
-  try { await sAppend('Produtos!A2', [[name, aisle]]); } catch(e) { console.warn(e); }
-}
-
-// ── FUZZY SEARCH ──────────────────────────────────────────────────────────
+// ── UTILS ─────────────────────────────────────────────────────────────────
 function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim(); }
 
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'), 2400);
+}
+
+function showStatus(msg) {
+  const bar = document.getElementById('status-bar');
+  document.getElementById('status-bar-txt').textContent = msg;
+  bar.classList.add('visible');
+  setTimeout(()=>bar.classList.remove('visible'), 2000);
+}
+
+// ── REAL-TIME LISTENERS ───────────────────────────────────────────────────
+// Listen to products
+onSnapshot(productsCol, snap => {
+  products = snap.docs.map(d => ({id: d.id, ...d.data()}));
+});
+
+// Listen to shopping list — updates UI in real time
+onSnapshot(query(listCol, orderBy('createdAt', 'asc')), snap => {
+  listItems = snap.docs.map(d => ({id: d.id, ...d.data()}));
+  renderList();
+});
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
 function search(q) {
   if (!q) return [];
   const nq = norm(q);
@@ -340,11 +284,6 @@ function search(q) {
     .filter(Boolean)
     .sort((a,b)=>b.score-a.score)
     .slice(0, 7);
-}
-
-function getAisle(name) {
-  const p = products.find(p => norm(p.name) === norm(name));
-  return p ? p.aisle : null;
 }
 
 function hlText(text, q) {
@@ -375,7 +314,6 @@ searchInp.addEventListener('input', () => {
     suggestBox.appendChild(d);
   });
 
-  // "Add new" option
   const dNew = document.createElement('div');
   dNew.className = 'sug-item';
   dNew.innerHTML = `<span class="sug-aisle new">Novo</span><span class="sug-name">${q}</span><span class="sug-hint">Adicionar produto novo…</span>`;
@@ -399,17 +337,19 @@ function pickProduct(name, aisle, isNew) {
     pending = { name };
     newPanel.classList.add('open');
     document.getElementById('new-aisle').value = '';
-    document.getElementById('new-aisle').focus();
+    setTimeout(()=>document.getElementById('new-aisle').focus(), 100);
   }
 }
 
-document.getElementById('btn-confirm').addEventListener('click', () => {
+document.getElementById('btn-confirm').addEventListener('click', async () => {
   if (!pending) return;
   const aisle = parseInt(document.getElementById('new-aisle').value);
   if (!aisle || aisle < 1) { toast('⚠️ Indica o número do corredor'); return; }
-  products.push({ name: pending.name, aisle });
-  pushNewProduct(pending.name, aisle);
-  persist();
+
+  // Save new product to Firebase
+  await addDoc(productsCol, { name: pending.name, aisle });
+  toast(`📍 Corredor ${aisle} guardado!`);
+
   addToList(pending.name, aisle);
   pending = null;
   newPanel.classList.remove('open');
@@ -420,60 +360,35 @@ document.getElementById('new-aisle').addEventListener('keydown', e => {
 });
 
 // ── LIST OPERATIONS ───────────────────────────────────────────────────────
-function addToList(name, aisle) {
-  const existing = list.find(i => norm(i.name) === norm(name));
+async function addToList(name, aisle) {
+  const existing = listItems.find(i => norm(i.name) === norm(name));
   if (existing) {
-    existing.done = false;
-    toast(`📦 ${name} já está na lista`);
-  } else {
-    list.push({ id: nid++, name, aisle, done: false });
-    toast(`✅ ${name} adicionado`);
+    // Uncheck if already there
+    await updateDoc(doc(db, 'lista', existing.id), { done: false });
+    toast(`📦 ${name} já estava na lista`);
+    return;
   }
-  persist();
-  renderList();            // atualiza ecrã imediatamente
-  setTimeout(pushList, 0); // sincroniza Sheets em background
+  await addDoc(listCol, { name, aisle: aisle || null, done: false, createdAt: Date.now() });
+  toast(`✅ ${name} adicionado`);
 }
 
-function toggleItem(id) {
-  const item = list.find(i => i.id === id);
+async function toggleItem(id) {
+  const item = listItems.find(i => i.id === id);
   if (!item) return;
-  item.done = !item.done;
-  persist();
-  setTimeout(pushList, 0);
 
-  // Update DOM directly — no full re-render
-  const liEl    = document.querySelector(`.li[data-id="${id}"]`);
-  const chkEl   = document.querySelector(`.li-chk[data-id="${id}"] .chk-circle`);
-  if (liEl)  liEl.classList.toggle('done', item.done);
-  if (chkEl) chkEl.classList.toggle('on',  item.done);
+  // Optimistic UI update immediately
+  const liEl  = document.querySelector(`.li[data-id="${id}"]`);
+  const chkEl = document.querySelector(`.li[data-id="${id}"] .chk-circle`);
+  const newDone = !item.done;
+  if (liEl)  liEl.classList.toggle('done', newDone);
+  if (chkEl) { chkEl.classList.toggle('on', newDone); chkEl.textContent = newDone ? '✓' : ''; }
 
-  // Update progress bar
-  const total = list.length, done = list.filter(i=>i.done).length;
-  const pct = Math.round(done/total*100);
-  const pw = document.getElementById('progress-wrap');
-  pw.classList.toggle('visible', total > 0);
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-txt').textContent  = `${done} de ${total} produto${total!==1?'s':''}`;
-  document.getElementById('progress-pct').textContent  = pct + '%';
-
-  // Update aisle counter
-  const aisleKey = item.aisle != null ? item.aisle : 'sem-corredor';
-  const aisleItems = list.filter(i => (i.aisle != null ? i.aisle : 'sem-corredor') == aisleKey);
-  const aisleDone  = aisleItems.filter(i => i.done).length;
-  const countEl = liEl?.closest('.aisle-grp')?.querySelector('.aisle-count');
-  if (countEl) countEl.innerHTML = `<b>${aisleDone}</b>/${aisleItems.length}`;
-
-  // Show/hide bottom bar
-  document.getElementById('bottom-bar').classList.toggle('visible', done > 0);
-
-  if (done === total && total > 0) setTimeout(()=>toast('🎉 Compras concluídas!'), 300);
+  // Sync to Firebase
+  await updateDoc(doc(db, 'lista', id), { done: newDone });
 }
 
-function deleteItem(id) {
-  list = list.filter(i => i.id !== id);
-  persist();
-  renderList();
-  setTimeout(pushList, 0);
+async function deleteItem(id) {
+  await deleteDoc(doc(db, 'lista', id));
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────
@@ -481,8 +396,10 @@ function renderList() {
   const body  = document.getElementById('list-body');
   const empty = document.getElementById('list-empty');
 
+  const total = listItems.length;
+  const done  = listItems.filter(i=>i.done).length;
+
   // Progress
-  const total = list.length, done = list.filter(i=>i.done).length;
   const pw = document.getElementById('progress-wrap');
   if (total > 0) {
     pw.classList.add('visible');
@@ -495,41 +412,40 @@ function renderList() {
   }
 
   // Bottom bar
-  const bb = document.getElementById('bottom-bar');
-  bb.classList.toggle('visible', done > 0);
+  document.getElementById('bottom-bar').classList.toggle('visible', done > 0);
 
-  if (!list.length) {
+  if (!total) {
     body.innerHTML = '';
     empty.style.display = 'block';
     body.appendChild(empty);
     return;
   }
-
-  // Remove empty from body before clearing, so we don't lose the reference
   if (empty.parentNode === body) body.removeChild(empty);
+  empty.style.display = 'none';
+  body.innerHTML = '';
+
   // Group by aisle
   const groups = {};
-  list.forEach(item => {
-    const key = item.aisle != null ? item.aisle : 'sem-corredor';
+  listItems.forEach(item => {
+    const key = item.aisle != null ? String(item.aisle) : 'sem-corredor';
     if (!groups[key]) groups[key] = [];
     groups[key].push(item);
   });
 
   const keys = Object.keys(groups).sort((a,b) => {
-    if (a === 'sem-corredor') return 1;
-    if (b === 'sem-corredor') return -1;
-    return parseInt(a) - parseInt(b);
+    if (a==='sem-corredor') return 1;
+    if (b==='sem-corredor') return -1;
+    return parseInt(a)-parseInt(b);
   });
+
   keys.forEach((key, gi) => {
-    const items    = groups[key];
-    const isUnk    = key === 'sem-corredor';
-    const allDone  = items.every(i=>i.done);
-    const doneCnt  = items.filter(i=>i.done).length;
+    const items   = groups[key];
+    const isUnk   = key === 'sem-corredor';
+    const doneCnt = items.filter(i=>i.done).length;
 
     const grp = document.createElement('div');
     grp.className = 'aisle-grp' + (isUnk ? ' unknown' : '');
     grp.style.animationDelay = (gi * 0.05) + 's';
-
     grp.innerHTML = `
       <div class="aisle-head">
         <div class="aisle-num">${isUnk ? '?' : 'C' + key}</div>
@@ -542,71 +458,44 @@ function renderList() {
       li.className = 'li' + (item.done ? ' done' : '');
       li.dataset.id = item.id;
       li.innerHTML = `
-        <div class="li-chk" data-id="${item.id}">
-          <div class="chk-circle${item.done?' on':''}"></div>
+        <div class="li-chk">
+          <div class="chk-circle${item.done?' on':''}">${item.done?'✓':''}</div>
         </div>
         <div class="li-name">${item.name}</div>
-        <button class="li-del" data-id="${item.id}" aria-label="Remover">×</button>`;
+        <button class="li-del" aria-label="Remover">×</button>`;
+      li.querySelector('.li-chk').addEventListener('click', () => toggleItem(item.id));
+      li.querySelector('.li-del').addEventListener('click', () => deleteItem(item.id));
       grp.appendChild(li);
     });
 
     body.appendChild(grp);
   });
 
-  // Events
-  body.querySelectorAll('.li-chk').forEach(el =>
-    el.addEventListener('click', () => toggleItem(parseInt(el.dataset.id))));
-  body.querySelectorAll('.li-del').forEach(el =>
-    el.addEventListener('click', () => deleteItem(parseInt(el.dataset.id))));
+  if (done === total && total > 0) setTimeout(()=>toast('🎉 Compras concluídas!'), 300);
 }
 
-// ── CONFIG ────────────────────────────────────────────────────────────────
-document.getElementById('cfg-sheet-id').value = cfg.sheetId || '';
-document.getElementById('cfg-api-key').value  = cfg.apiKey  || '';
-
-document.getElementById('btn-save-cfg').addEventListener('click', async () => {
-  cfg.sheetId = document.getElementById('cfg-sheet-id').value.trim();
-  cfg.apiKey  = document.getElementById('cfg-api-key').value.trim();
-  localStorage.setItem('cfg', JSON.stringify(cfg));
-
-  const row = document.getElementById('status-row');
-  const dot = document.getElementById('status-dot');
-  const txt = document.getElementById('status-txt');
-  row.style.display = 'flex';
-  dot.className = 'dot dot-wait'; txt.textContent = 'A testar…';
-
-  try {
-    await sGet('Produtos!A1');
-    dot.className = 'dot dot-ok'; txt.textContent = 'Ligação OK ✅';
-    toast('✅ Google Sheets ligado!');
-    await syncFromSheets();
-  } catch(e) {
-    dot.className = 'dot dot-err'; txt.textContent = 'Erro — verifica o ID e a chave API';
-  }
-});
-
-document.getElementById('btn-sync').addEventListener('click', syncFromSheets);
-
+// ── CONFIG ACTIONS ────────────────────────────────────────────────────────
 document.getElementById('btn-clear-list').addEventListener('click', async () => {
   if (!confirm('Limpar a lista de compras?')) return;
-  list = []; persist();
-  if (cfg.sheetId && cfg.apiKey) { try { await sClear('Lista!A2:B'); } catch(e){} }
-  renderList(); toast('Lista limpa');
+  const batch = writeBatch(db);
+  listItems.forEach(i => batch.delete(doc(db, 'lista', i.id)));
+  await batch.commit();
+  toast('Lista limpa');
 });
 
-document.getElementById('btn-clear-done').addEventListener('click', () => {
-  list = list.filter(i => !i.done);
-  persist(); pushList(); renderList();
+document.getElementById('btn-clear-done').addEventListener('click', async () => {
+  const batch = writeBatch(db);
+  listItems.filter(i=>i.done).forEach(i => batch.delete(doc(db, 'lista', i.id)));
+  await batch.commit();
   toast('Produtos comprados removidos');
 });
 
-// ── DEMO DATA ─────────────────────────────────────────────────────────────
-document.getElementById('btn-demo').addEventListener('click', () => {
-  products = [
-    {name:'Maçã',aisle:1},{name:'Banana',aisle:1},{name:'Laranja',aisle:1},{name:'Tomate',aisle:1},
-    {name:'Alface',aisle:1},{name:'Cenoura',aisle:1},{name:'Pepino',aisle:1},{name:'Cebola',aisle:1},
-    {name:'Leite Mimosa',aisle:2},{name:'Leite Pingo Doce',aisle:2},{name:'Iogurte Natural',aisle:2},
-    {name:'Manteiga',aisle:2},{name:'Queijo Flamengo',aisle:2},{name:'Ovos',aisle:2},{name:'Natas',aisle:2},
+document.getElementById('btn-demo').addEventListener('click', async () => {
+  const demo = [
+    {name:'Maçã',aisle:1},{name:'Banana',aisle:1},{name:'Laranja',aisle:1},
+    {name:'Tomate',aisle:1},{name:'Alface',aisle:1},{name:'Cenoura',aisle:1},
+    {name:'Leite Mimosa',aisle:2},{name:'Iogurte Natural',aisle:2},{name:'Manteiga',aisle:2},
+    {name:'Queijo Flamengo',aisle:2},{name:'Ovos',aisle:2},{name:'Natas',aisle:2},
     {name:'Frango inteiro',aisle:3},{name:'Bife de vaca',aisle:3},{name:'Costeletas',aisle:3},
     {name:'Salmão',aisle:3},{name:'Bacalhau',aisle:3},{name:'Chouriço',aisle:3},
     {name:'Pão de forma',aisle:4},{name:'Baguette',aisle:4},{name:'Tostas',aisle:4},
@@ -616,21 +505,24 @@ document.getElementById('btn-demo').addEventListener('click', () => {
     {name:'Shampoo',aisle:8},{name:'Gel de banho',aisle:8},{name:'Pasta dentes',aisle:8},
     {name:'Detergente roupa',aisle:9},{name:'Papel higiénico',aisle:9},{name:'Sacos lixo',aisle:9},
   ];
-  persist();
+  const batch = writeBatch(db);
+  // Only add products that don't exist yet
+  const existing = products.map(p=>norm(p.name));
+  demo.filter(p=>!existing.includes(norm(p.name))).forEach(p => {
+    batch.set(doc(productsCol), p);
+  });
+  await batch.commit();
   toast('✅ Produtos de exemplo carregados!');
-  // Switch to lista tab
-  document.querySelector('[data-tab="lista"]').click();
 });
 
-// ── TOAST ─────────────────────────────────────────────────────────────────
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('on');
-  setTimeout(()=>t.classList.remove('on'), 2400);
-}
+// ── TABS ──────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('view-'+t.dataset.tab).classList.add('active');
+}));
 
-// ── INIT ──────────────────────────────────────────────────────────────────
-renderList();
 </script>
 </body>
 </html>
